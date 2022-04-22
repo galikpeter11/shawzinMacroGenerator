@@ -1,10 +1,7 @@
 # Shawzin macro generator
 ## Macro generator for Oscar X7 mouse software
-## How to use?
-### Dependencies
-
+## Dependencies
 - JDK11
 - Maven
-
-### Start
+## How to start?
 `mvn spring-boot:run`
