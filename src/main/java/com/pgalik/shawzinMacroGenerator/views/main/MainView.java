@@ -1,0 +1,79 @@
+package com.pgalik.shawzinMacroGenerator.views.main;
+
+
+import com.pgalik.shawzinMacroGenerator.service.MacroService;
+import com.vaadin.flow.component.Key;
+import com.vaadin.flow.component.Unit;
+import com.vaadin.flow.component.button.Button;
+import com.vaadin.flow.component.html.H1;
+import com.vaadin.flow.component.html.Pre;
+import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
+import com.vaadin.flow.component.orderedlayout.VerticalLayout;
+import com.vaadin.flow.component.textfield.TextArea;
+import com.vaadin.flow.router.Route;
+
+@Route("")
+public class MainView extends VerticalLayout {
+    private final MacroService macroService;
+
+
+    public MainView(MacroService macroService) {
+        this.macroService = macroService;
+
+        final TextArea shawzinStringField = initInputField();
+        final Button generateButton = initGenerateButton();
+        final Button saveButton = initSaveButton();
+        final Pre resultPre = initResultPre();
+
+        generateButton.addClickListener(click -> {
+            resultPre.setText(getMacroText(shawzinStringField.getValue()));
+            resultPre.setVisible(true);
+        });
+
+
+
+        add(
+                new H1("Shawzin X7 Macro generator"),
+                shawzinStringField,
+                new HorizontalLayout(
+                        generateButton,
+                        saveButton
+                ),
+                resultPre
+        );
+    }
+
+    private Pre initResultPre() {
+        Pre pre = new Pre();
+        pre.setWidth(96, Unit.VW);
+        pre.setVisible(false);
+        return pre;
+    }
+
+    private TextArea initInputField() {
+        TextArea inputField = new TextArea("Shawzin string");
+        inputField.setWidthFull();
+        inputField.setValue("5EAAKACMAESAXRAeMAhKAnNAtUBAUBGSBLRBRNBXNBnUBtUByhB4SB9MCIMCTUCYSCgUCphCvNDDUDWhDcVDtMEbEEfMElEEqSEuRE1ME4KE8MFBEFGMFLMFQUFVUFaSFeRFkMFpEFuKFzMF4UF8UGBhGHSGLMGWEGaMGfUGkSGsUGzhG4EG9MHCEHHSHMEHQUHVEHaUHfhHkhHtVHyKH8MIGEIKMIPEIUSIZRIgMIiKIlMIrEIwMI1MI6UI/hJESJJRJNMJSEJXKJcMJhUJlUJqhJvSJ0MJ+EKDMKIkKNhKTSKWUKbhKfEKkMKpRKtSKyRK5MK8KLAMLFELKMLPMLTULYULdSLiRLmMLrELwKL1ML5UL+UMDhMISMNMMWEMbMMgUMlSMsUM0lM5kM9hM+lNClNHlNMlNWNNgMNpSNuhNzUN5UN8SOAUOFhOKhOTUOYSOdROiSOmMOwhO5UO+SPDRPHSPMMPVKPeMPjSPoSPxNP2MP/SQEhQJUQSSQWUQbhQghQpkQuhQzUQ4hQ9hRGhRUhRdlRnlRslRxlR2hR7kR8SSrUSsSSuRSwMSzES4MS9ETBSTGRTNMTPKTUMTZETeMTjMTnUTsUTxST2RT6MT/EUEKUIMUNUUSUUXhUcSUhMUqEUvMU0UU5SVAUVHhVMEVRMVVEVaSVeEVjUVoEVtUVyhV3hWAVWFKWPMWYEWdMWhEWmSWrRWyMW0KW5MW9EXCMXHMXMUXQUXVSXaRXfMXkEXoKXtMXxUX3UX7hYASYFMYOEYTMYYUYdSYkUYrhYwEY1MY6RY/SZDRZKMZMKZRMZWEZbMZfMZkUZpUZuSZyRZ3MZ8EaAKaFMaJUaOUaThaYSadMamEarMawka1ha8Sa+UbClbHlbMlbRlbVlbalbjJbsMbtMb1Sb6hb/UcFUcIScMUcRhcWhcfUcjScoRctScyMc8hdFUdJSdORdTSdYMdhKdrMdvSd0Sd+NeCMeMSeQheVUeeSeiUenheshe1ke6he+UfDhfIhfRhfghfpkfyhfzlf3lf8lgAlgFlgPNgYMgiSgnhgsUgzUg1Sg6Ug+hhDhhMUhQShVRhaShfMhohhxUh2Sh7");
+        return inputField;
+    }
+
+    private Button initGenerateButton() {
+        Button generateButton = new Button("Generate");
+        generateButton.addClickShortcut(Key.ENTER);
+        return generateButton;
+    }
+
+    private Button initSaveButton() {
+        Button saveButton = new Button("Save");
+        saveButton.setVisible(false);
+        return saveButton;
+    }
+
+    private String getMacroText(String shawzinString) {
+        try {
+            return macroService.createMacroFromString(shawzinString).toString();
+        } catch (Exception ex) {
+            return ex.getMessage();
+        }
+    }
+}
