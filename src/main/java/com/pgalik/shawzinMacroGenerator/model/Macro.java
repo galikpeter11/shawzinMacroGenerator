@@ -1,15 +1,21 @@
 package com.pgalik.shawzinMacroGenerator.model;
 
 import com.pgalik.shawzinMacroGenerator.model.action.Action;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
-public record Macro(
-        String description,
-        String comment,
-        List<Action> actions
-) {
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+public class Macro {
+    private String description;
+    private String comment;
+    private List<Action> actions;
+
     @Override
     public String toString() {
         final String actionsString = actions.stream()

@@ -23,6 +23,6 @@ public class MacroService {
     public Macro createMacroFromString(final String shawzinString) {
         final Song song = songService.createSongFromString(shawzinString);
         List<Action> actions = actionService.createActionsFromSong(song);
-        return new Macro(song.title(), defaultDescription, actions);
+        return new Macro(song.getTitle(), defaultDescription, actions);
     }
 }

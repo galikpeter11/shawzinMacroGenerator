@@ -32,8 +32,8 @@ public class ActionService {
     public List<Action> createActionsFromSong(final Song song) {
         List<Action> actions = new ArrayList<>();
 
-        for (int i = 1; i < song.notes().size(); i++) {
-            List<Action> newActions = fromNotes(song.notes().get(i - 1), song.notes().get(i));
+        for (int i = 1; i < song.getNotes().size(); i++) {
+            List<Action> newActions = fromNotes(song.getNotes().get(i - 1), song.getNotes().get(i));
             actions.addAll(newActions);
         }
         currentFret = "";
@@ -60,37 +60,37 @@ public class ActionService {
 
     private List<Action> getFretActions(final Note current) {
         final List<Action> result = new ArrayList<>();
-        if (!current.fret().equals(currentFret)) {
+        if (!current.getFret().equals(currentFret)) {
             if (!currentFret.isEmpty()) {
                 for (int i = 0; i < currentFret.length(); i++) {
                     char c = currentFret.charAt(i);
                     result.add(new KeyUp(fretMap.get(c + "")));
                 }
             }
-            if (!current.fret().isEmpty()) {
-                for (int i = 0; i < current.fret().length(); i++) {
-                    char c = current.fret().charAt(i);
+            if (!current.getFret().isEmpty()) {
+                for (int i = 0; i < current.getFret().length(); i++) {
+                    char c = current.getFret().charAt(i);
                     result.add(new KeyDown(fretMap.get(c + "")));
                 }
             }
-            currentFret = current.fret();
+            currentFret = current.getFret();
         }
         return result;
     }
 
     private List<Action> getStringActions(final Note current) {
         final List<Action> result = new ArrayList<>();
-        if (!current.string().isEmpty())
-            for (int i = 0; i < current.string().length(); i++) {
-                char c = current.string().charAt(i);
+        if (!current.getString().isEmpty())
+            for (int i = 0; i < current.getString().length(); i++) {
+                char c = current.getString().charAt(i);
                 result.add(new KeyDown(stringMap.get(c + "")));
             }
 
         result.add(new Delay(16));
 
-        if (!current.string().isEmpty())
-            for (int i = 0; i < current.string().length(); i++) {
-                char c = current.string().charAt(i);
+        if (!current.getString().isEmpty())
+            for (int i = 0; i < current.getString().length(); i++) {
+                char c = current.getString().charAt(i);
                 result.add(new KeyUp(stringMap.get(c + "")));
             }
         return result;
@@ -99,7 +99,7 @@ public class ActionService {
     private List<Action> getNextNoteActions(final Note current, final Note next) {
         final List<Action> result = new ArrayList<>();
         if (next != null) {
-            result.add(new Delay((next.time() - current.time()) * tickRate));
+            result.add(new Delay((next.getTime() - current.getTime()) * tickRate));
         }
 
         if (next == null && !currentFret.isEmpty()) {

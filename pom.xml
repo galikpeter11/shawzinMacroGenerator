@@ -14,7 +14,7 @@
 	<name>Shawzin X7 Macro generator</name>
 	<description>Demo project for Spring Boot</description>
 	<properties>
-		<java.version>17</java.version>
+		<java.version>11</java.version>
 		<vaadin.version>23.0.6</vaadin.version>
 	</properties>
 	<dependencies>

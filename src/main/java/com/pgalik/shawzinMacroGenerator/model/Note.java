@@ -1,9 +1,15 @@
 package com.pgalik.shawzinMacroGenerator.model;
 
-public record Note(
-        String string,
-        String fret,
-        Integer time
-) {
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+public class Note {
+    private String string;
+    private String fret;
+    private Integer time;
 
 }
