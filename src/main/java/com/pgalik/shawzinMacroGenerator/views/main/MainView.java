@@ -17,17 +17,20 @@ public class MainView extends VerticalLayout {
         MainViewComponent viewComponent = new MainViewComponent();
 
         viewComponent.getGenerateButton().addClickListener(click -> {
-            viewComponent.getResultPre().setText(getMacroText(viewComponent.getShawzinStringField().getValue()));
-            viewComponent.getResultPre().setVisible(true);
+            final String macroText = getMacroText(
+                    viewComponent.getShawzinStringField().getValue(),
+                    viewComponent.getTitleInput().getValue()
+            );
+            viewComponent.setMacroText(macroText);
         });
+
 
         add(viewComponent);
     }
 
-
-    private String getMacroText(String shawzinString) {
+    private String getMacroText(final String shawzinString, final String songTitle) {
         try {
-            return macroService.createMacroFromString(shawzinString).toString();
+            return macroService.createMacroFromString(shawzinString, songTitle).toString();
         } catch (Exception ex) {
             return ex.getMessage();
         }

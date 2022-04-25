@@ -20,8 +20,8 @@ public class MacroService {
         this.actionService = actionService;
     }
 
-    public Macro createMacroFromString(final String shawzinString) {
-        final Song song = songService.createSongFromString(shawzinString);
+    public Macro createMacroFromString(final String shawzinString, final String songTitle) {
+        final Song song = songService.createSongFromString(shawzinString, songTitle);
         List<Action> actions = actionService.createActionsFromSong(song);
         return new Macro(song.getTitle(), defaultDescription, actions);
     }
